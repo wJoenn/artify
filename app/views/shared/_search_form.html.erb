@@ -1,0 +1,30 @@
+<section id="search-form">
+  <div class="form">
+    <form>
+      <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+      <input type="text" name="search">
+    </form>
+
+    <ul class="filter">
+      <li>Name</li>
+      <li class="active">City</li>
+    </ul>
+  </div>
+
+  <div class="monuments">
+    <% monuments = Monument.where(city: "Paris") %>
+    <%= link_to monument_path(monuments.first), class: "monument", style: "background-image: linear-gradient(rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.6)), url(#{ cl_image_path monuments.first.photo.key })" do %>
+      <h3><%= monuments.first.name %></h3>
+      <span><i class="fa-solid fa-location-dot"></i> <%= "#{monuments.first.city}, #{monuments.first.country_code}" %></span>
+    <% end %>
+
+    <div class="monuments-scroller">
+      <% monuments.all.drop(1).each do |mon| %>
+        <%= link_to monument_path(mon), class: "monument", style: "background-image: linear-gradient(rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.6)), url(#{ cl_image_path mon.photo.key })" do %>
+          <h3><%= mon.name %></h3>
+          <span><i class="fa-solid fa-location-dot"></i> <%= "#{mon.city}, #{mon.country_code}" %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
